@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantos dias pro Diow ir embora?</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e0f2f1;
+            color: #2c3e50;
+            text-align: center;
+        }
+        .container {
+            padding: 3rem;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            max-width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        h1 {
+            font-size: 2.2rem;
+            margin: 0;
+            color: #1a5276;
+        }
+        .cronometro {
+            display: flex;
+            gap: 1rem;
+            font-size: 4rem;
+            font-weight: 700;
+            color: #117864;
+            line-height: 1;
+        }
+        .unidade {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+        }
+        .valor {
+            font-size: 5rem;
+            line-height: 1.2;
+        }
+        .rotulo {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #7f8c8d;
+        }
+        @media (max-width: 600px) {
+            .cronometro {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            .unidade {
+                min-width: 60px;
+            }
+            .valor {
+                font-size: 3rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Quantos dias pro Diow ir embora?</h1>
+        <div class="cronometro" id="cronometro">
+            <div class="unidade">
+                <span class="valor" id="dias">0</span>
+                <span class="rotulo">Dias</span>
+            </div>
+            <div class="unidade">
+                <span class="valor" id="horas">0</span>
+                <span class="rotulo">Horas</span>
+            </div>
+            <div class="unidade">
+                <span class="valor" id="minutos">0</span>
+                <span class="rotulo">Minutos</span>
+            </div>
+            <div class="unidade">
+                <span class="valor" id="segundos">0</span>
+                <span class="rotulo">Segundos</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- INÍCIO DO CÓDIGO JAVASCRIPT ---
+
+        // A data final da contagem regressiva foi definida para 30 dias a partir de 8 de agosto de 2025.
+        const dataDePartida = new Date('2025-09-07T00:00:00');
+
+        function pad(number) {
+            return (number < 10 ? '0' : '') + number;
+        }
+
+        function atualizarContador() {
+            const agora = new Date();
+            const diferencaEmMilissegundos = dataDePartida - agora;
+
+            const diasElemento = document.getElementById('dias');
+            const horasElemento = document.getElementById('horas');
+            const minutosElemento = document.getElementById('minutos');
+            const segundosElemento = document.getElementById('segundos');
+
+            // Se a contagem já terminou
+            if (diferencaEmMilissegundos <= 0) {
+                diasElemento.textContent = '00';
+                horasElemento.textContent = '00';
+                minutosElemento.textContent = '00';
+                segundosElemento.textContent = '00';
+                return;
+            }
+
+            // Converte os milissegundos para dias, horas, minutos e segundos
+            const segundos = Math.floor((diferencaEmMilissegundos / 1000) % 60);
+            const minutos = Math.floor((diferencaEmMilissegundos / (1000 * 60)) % 60);
+            const horas = Math.floor((diferencaEmMilissegundos / (1000 * 60 * 60)) % 24);
+            const dias = Math.floor(diferencaEmMilissegundos / (1000 * 60 * 60 * 24));
+
+            // Atualiza o HTML com os valores formatados
+            diasElemento.textContent = pad(dias);
+            horasElemento.textContent = pad(horas);
+            minutosElemento.textContent = pad(minutos);
+            segundosElemento.textContent = pad(segundos);
+        }
+
+        // Chama a função pela primeira vez para exibir o contador imediatamente
+        atualizarContador();
+        
+        // Atualiza o contador a cada segundo
+        setInterval(atualizarContador, 1000);
+
+        // --- FIM DO CÓDIGO JAVASCRIPT ---
+    </script>
+</body>
+</html>
+
